@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<!--
+/* 
+    Created on : Apr 25, 2014, 3:34:02 PM
+    Author     : santosh Gautam
+*/
+-->
+<html>
+<head>
+    <title>CSS animated header generator</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="css/fontPicker.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css">
+    <link href=
+    "https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/dot-luv/jquery-ui.min.css"
+    rel="stylesheet">
+    <link href="css/spectrum.css" rel="stylesheet"
+    type="text/css">
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script><!-- For fontpicker -->
+
+    <script type="text/javascript">
+        google.load("jquery", "1.4.4");
+            google.load("webfont", "1");
+            google.setOnLoadCallback(function() {
+                //for 1st font chooser
+                $('#selectH1').googleFontPicker({
+                    defaultFont: 'Allan',
+                    callbackFunc: function(fontFamily) {
+                        //Front word replace in css
+                        $('.front').css('fontFamily', fontFamily);
+
+                        //replace in paragraph
+                        var match = /\/\*front font\*\/font\-family\:\w+,\w+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*front font*/font-family:" + fontFamily);
+                            });
+                        });//end textarea
+                        
+                        //replace in paragraph                       
+                        var match = /<\!--front--><link\shref='http:\/\/fonts\.googleapis\.com\/css\?family=[\w+ \w+]+/
+                       
+                        //Remove any word after comma eg. A,B => A
+                        var fontFamilyNew = fontFamily.replace(/,[^,]+/, "");
+                        
+                        //Replace 'space' with '+' eg. A B => A+B
+                        fontFamilyNew = fontFamilyNew.replace(/[\s]/g, "+");
+
+                        $("#show_header").val(function (i, currentVal) {
+                            return currentVal.replace(match, "<!--front--><link href='http://fonts.googleapis.com/css?family="+fontFamilyNew);
+                        });
+
+                    }//end callbackFunc
+                  
+                });//end selectH1
+
+                //for 2nd font chooser
+                $('#selectH1B').googleFontPicker({
+                    defaultFont: 'Calligraffiti',
+                    callbackFunc: function(fontFamily) {
+                        $('.back').css('fontFamily', fontFamily);
+                        
+                        //replace in paragraph
+                        var match = /\/\*back font\*\/font\-family\:\w+,\w+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*back font*/font-family:" + fontFamily);
+                            });
+                        }); 
+                        
+                        //replace in paragraph 
+                        var match = /<\!--back--><link\shref='http:\/\/fonts\.googleapis\.com\/css\?family=[\w+ \w+]+/
+                       
+                        //Remove any word after comma eg. A,B => A
+                        var fontFamilyNew = fontFamily.replace(/,[^,]+/, "");
+                        
+                        //Replace 'space' with '+' eg. A B => A+B
+                        fontFamilyNew = fontFamilyNew.replace(/[\s]/g, "+");
+
+                        $("#show_header").val(function (i, currentVal) {
+                            return currentVal.replace(match, "<!--back--><link href='http://fonts.googleapis.com/css?family="+fontFamilyNew);
+                        });
+                    }
+                });
+
+                //Common for all font choosers
+                WebFont.load({
+                    google: {
+                        families: ['Tangerine', 'Cantarell', 'Droid Sans', 'Allan', 'Allerta', 'Allerta Stencil', 'Anonymous Pro', 'Arimo', 'Arvo', 'Bentham', 'Buda', 'Cabin', 'Calligraffitti', 'Cantarell', 'Cardo', 'Cherry Cream Soda', 'Chewy', 'Coda', 'Coming Soon', 'Copse', 'Corben', 'Cousine', 'Covered By Your Grace', 'Crafty Girls', 'Crimson Text', 'Crushed', 'Cuprum', 'Droid Sans', 'Droid Sans Mono', 'Droid Serif', 'Fontdiner Swanky', 'GFS Didot', 'GFS Neohellenic', 'Geo', 'Gruppo', 'Hanuman', 'Homemade Apple', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Inconsolata', 'Irish Growler', 'Josefin Sans', 'Josefin Slab', 'Just Another Hand', 'Just Me Again Down Here', 'Kenia', 'Kranky', 'Kristi', 'Lato', 'Lekton', 'Lobster', 'Luckiest Guy', 'Merriweather', 'Molengo', 'Mountains of Christmas', 'Neucha', 'Neuton', 'Nobile', 'OFL Sorts Mill Goudy TT', 'Old Standard TT', 'Orbitron', 'PT Sans', 'PT Sans Caption', 'PT Sans Narrow', 'Permanent Marker', 'Philosopher', 'Puritan', 'Raleway', 'Reenie Beanie', 'Rock Salt', 'Schoolbell', 'Slackey', 'Sniglet', 'Sunshiney', 'Syncopate', 'Tangerine', 'Tinos', 'Ubuntu', 'UnifrakturCook', 'UnifrakturMaguntia', 'Unkempt', 'Vibur', 'Vollkorn', 'Walter Turncoat', 'Yanone Kaffeesatz']
+                    }
+                    
+                });
+               
+            });
+    </script>
+    <script src=
+    "https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type=
+    "text/javascript"></script>
+    <script src=
+    "https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"
+    type="text/javascript"></script><!-- Needed for font chooser -->
+
+    <script src=
+    "https://ajax.googleapis.com/ajax/libs/webfont/1.0.29/webfont.js" type=
+    "text/javascript"></script>
+    <script src="js/jquery.googlefontpicker.js" type="text/javascript"></script><!-- Needed for dialog min-max -->
+
+    <script src="js/jquery.dialogextend.js" type="text/javascript"></script><!-- Needed for copy to clipboard -->
+
+    <script src="js/ZeroClipboard.js" type="text/javascript"></script><!-- Needed for spectrum color-chooser -->
+
+    <script src="js/spectrum.js" type=
+    "text/javascript"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+                //used for number spinners
+                $("input[type=number]").spinner({
+                    max: 40,
+                    min: 1
+                }).on('input', function() {
+                    var val = this.value,
+                            $this = $(this),
+                            max = $this.spinner('option', 'max'),
+                            min = $this.spinner('option', 'min');
+                    if (!val.match(/^\d+$/))
+                        val = 0; //we want only number, no alpha
+                    this.value = parseInt(val > max ? max : val < min ? min : val);
+                });
+                
+            });
+    </script>
+    <script>
+        $(function() {
+            $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+            $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+        });
+    </script>
+    <style>
+        .ui-tabs-vertical { width: 83em; }
+        .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: right; }
+        .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 15px !important; margin: 0 -1px .2em 0; }
+        .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+        .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-left: .1em; border-left-width: 1px; border-left-width: 1px; }
+        .ui-tabs-vertical .ui-tabs-panel { padding: 1em;}
+    </style>
+    <script>
+        $(function() {
+                $(".accordion").accordion({
+                    collapsible: true,
+                    active: false,
+                    heightStyle: "content"
+                });
+            });
+
+    </script>
+    <script>
+         //Add phone number button click, textbox change
+            $(document).ready(function() {
+                //function that changes the code in HTML area
+                    function remove_css(){
+                        //Empty the contents of #temp_html
+                        $("#temp_html").empty();
+
+                        //Store html in temp div
+                       
+                        $("#html_code").clone().appendTo("#temp_html");////something wrong with this code?
+                        
+                        //remove style attribute
+                        $("#temp_html div.animation-1 span.front").removeAttr('style');//Remove front attr
+                        $("#temp_html div.animation-1 span").removeAttr('style');
+
+                        var html_extracted = $("#temp_html #html_code").clone().html();
+
+                        $("#show_html").text(unescape(escape(html_extracted)));
+                    }
+                var phone_number_form_index = 0;//value for ID
+                var MaxInputs = 4;//use 4 if we want 5
+                var myIndex = 0;//value for number of inputs
+                
+                //Hide remove button initially
+                $("#remove_phone_number").css("display","none");   
+                
+                //When button is clicked       
+                $("#add_phone_number").click(function() {
+                    
+                    if (myIndex <= MaxInputs){
+                        //Display the button again
+                        if (myIndex >= 0) {
+                            $("#remove_phone_number").css("display", "inline");
+                            
+                            //show size settings
+                            $("div#size").show();
+                            $("span#message").hide();
+                
+                            //show font settings
+                            $("div#fontSet").show();
+                            $("span#messageFont").hide();
+                
+                            $("div#fontSetB").show();
+                            $("span#messageB").hide();
+                        } //end if
+                        
+                        phone_number_form_index++;
+                        $(this).parent().before($("#phone_number_form").clone().attr("id", "phone_number_form" + phone_number_form_index));
+                        $("#add_phone_numberB").parent().before($("#phone_number_formB").clone().attr("id", "phone_number_formB" + phone_number_form_index));
+                        $("#box").before($("#box").clone().attr("id", "box" + phone_number_form_index));
+                        $("#phone_number_form" + phone_number_form_index).css("display", "inline");
+                        $("#phone_number_formB" + phone_number_form_index).css("display", "inline");
+                        //$("#box" + phone_number_form_index).css("display", "inline-block");
+                        $("#box" + phone_number_form_index).removeClass("hidden-txt").addClass("not-hidden");
+
+                        remove_css();
+
+                        $("#phone_number_form" + phone_number_form_index + " :input").each(function() {
+                            $(this).attr("name", $(this).attr("name") + phone_number_form_index);
+                            $(this).attr("id", $(this).attr("id") + phone_number_form_index);
+
+                        });
+                        
+                        $("#phone_number_formB" + phone_number_form_index + " :input").each(function() {
+                            $(this).attr("name", $(this).attr("name") + phone_number_form_index);
+                            $(this).attr("id", $(this).attr("id") + phone_number_form_index);
+
+                        });
+                        
+                        //change text and background for each boxes
+                        if(phone_number_form_index ===1){
+                            //update textbox
+                            $('#word1').val("p");
+                            //update preview
+                            $("#box1 .front").text("p");
+                            
+                            //update color
+                            $('#bg_color1').val("#FF4136");
+                            
+                            //back words
+                            $('#wordB1').val("HTML");
+                            //update preview
+                            $("#box1 .back").text("HTML");
+                            
+                            //update color
+                            $('#bg_colorB1').val("#FF4136");
+                           
+                            //update HTML text
+                            remove_css();
+                            
+                            
+                        }
+                        else if(phone_number_form_index ===2){
+                            $('#word2').val("v");
+                            //update preview
+                            $("#box2 .front").text("v");
+                            
+                            //update color
+                            $('#bg_color2').val("#FF851B");
+                            
+                            //back words
+                            $('#wordB2').val("jQuery");
+                            //update preview
+                            $("#box2 .back").text("jQuery");
+                            
+                            //update color
+                            $('#bg_colorB2').val("#FF851B");
+                           
+                            //update HTML text
+                            remove_css();
+                        }
+                        
+                        else if(phone_number_form_index ===3){
+                            $('#word3').val("i")
+                            //update preview
+                            $("#box3 .front").text("i");
+                            
+                            //update color
+                            $('#bg_color3').val("#2ECC40");
+                            
+                            //back words
+                            $('#wordB3').val("CSS");
+                            //update preview
+                            $("#box3 .back").text("CSS");
+                            
+                            //update color
+                            $('#bg_colorB3').val("#6b3a3a");
+                            
+                             //$('#border_colorB3').val("#2ECC40");
+                           
+                            //update HTML text
+                            remove_css();
+                        }
+                        
+                        else if(phone_number_form_index ===4){
+                            $('#word4').val("e")
+                            //update preview
+                            $("#box4 .front").text("e");
+                            
+                            //update color
+                            $('#bg_color4').val("#0074D9");
+                           
+                            //update HTML text
+                            remove_css();
+                        }
+                        
+                        else if(phone_number_form_index ===5){
+                            $('#word5').val("w")
+                            //update preview
+                            $("#box5 .front").text("w");
+                            
+                            //update color
+                            $('#bg_color5').val("#B10DC9");
+                           
+                            //update HTML text
+                            remove_css();
+                        }
+
+                         //validate input of textbox
+                        $('#word' + phone_number_form_index).bind('keyup', function() {
+                            regex = /^[A-z0-9]+$/;
+                            if(!regex.test($(this).val())) {
+                                $(this).addClass("error");
+                                $(this).val("");
+                            } else {
+                                $(this).removeClass("error");           
+                            }
+                        }); 
+
+                        $('#word' + phone_number_form_index).bind('paste', function() {    
+                            regex = /^[A-z0-9]+$/;
+                            if(!regex.test($(this).val())) {
+                                $(this).addClass("error");
+                                $(this).val("");
+                            } else {
+                                $(this).removeClass("error");           
+                            }
+                        }); 
+
+                        $('#wordB' + phone_number_form_index).bind('keyup', function() {
+                            regex = /^[A-z0-9]+$/;
+                            if(!regex.test($(this).val())) {
+                                $(this).addClass("error");
+                                $(this).val("");
+                            } else {
+                                $(this).removeClass("error");           
+                            }
+                        }); 
+
+                        $('#wordB' + phone_number_form_index).bind('paste', function() {    
+                            regex = /^[A-z0-9]+$/;
+                            if(!regex.test($(this).val())) {
+                                $(this).addClass("error");
+                                $(this).val("");
+                            } else {
+                                $(this).removeClass("error");           
+                            }
+                        }); 
+
+
+                        $('.colorFul').bind('keyup', function() {
+                            regex = /^#[0-9A-F]{6}/i;
+                            if(!regex.test($(this).val())) {
+                                $(this).addClass("error");
+                                $(this).val("");
+                            } else {
+                                $('.colorFul').removeClass("error");           
+                            }
+                        }); 
+
+                        $(".colorFul").bind('paste', function() {    
+                            regex = /^#[0-9A-F]{6}/i;
+                            if(!regex.test($(this).val())) {
+                                $(this).addClass("error");
+                                $(this).val("");
+                            } else {
+                                $(this).removeClass("error");           
+                            }
+                        });
+
+
+                        //for front words
+                        $('#word' + phone_number_form_index).change(function() {
+
+                            var boxClicked1 = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var wordin = []; //array to hold numbers
+                            wordin[boxClicked1] = $(this).val(); // grab input value
+                            
+                            if ($(this).val().length > 0)
+                            { 
+                                $("#box" + boxClicked1 + " .front").text(wordin[boxClicked1]);
+                                remove_css();
+                            } //endif
+                            
+                        });//end front words function
+
+
+                        //for background color
+                        $('#bg_color' + phone_number_form_index).change(function() {
+
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var bg_colorin = []; //array to hold numbers
+                            bg_colorin[boxClicked] = $(this).val(); // grab input value
+                            if ($(this).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .front').css('background', bg_colorin[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp(".animation-1 .letter:nth-child\\(" + boxClicked + "\\) .front {background:#[0-9A-F]{6}", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, ".animation-1 .letter:nth-child(" + boxClicked + ") .front {background:" + bg_colorin[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.front').css('color', '#ffffff');
+                            }
+                        });//end bg_color function
+                        
+                        //for back words
+                        $('#wordB' + phone_number_form_index).change(function() {
+
+                            var boxClicked1 = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var wordin = []; //array to hold numbers
+                            wordin[boxClicked1] = $(this).val(); // grab input value
+                            if ($(this).val().length > 0)
+                            { 
+                                $("#box" + boxClicked1 + " .back").text(wordin[boxClicked1]);
+                                remove_css();
+                            } //endif
+                           
+                        });//end front words function
+
+                        //for background color
+                        $('#bg_colorB' + phone_number_form_index).change(function() {
+
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var bg_colorin = []; //array to hold numbers
+                            bg_colorin[boxClicked] = $(this).val(); // grab input value
+                            if ($(this).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .back').css('background', bg_colorin[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp(".animation-1 .letter:nth-child\\(" + boxClicked + "\\) .back {background:#[0-9A-F]{6}", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, ".animation-1 .letter:nth-child(" + boxClicked + ") .back {background:" + bg_colorin[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.front').css('color', '#ffffff');
+                            }
+                        });//end bg_color function
+                     
+                        ////////////////////////////////Front Border////////////////////////////////
+
+                        //for Border Color--on input change
+                        $('#border_color' + phone_number_form_index).change(function() {
+
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var border_colorin = [] //array to hold numbers
+                            border_colorin[boxClicked] = $(this).val(); // grab input value
+                            
+                            if ($(this).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .front').css('border-color', border_colorin[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*front border color " + boxClicked + "\\*\\/border-color:#[0-9A-F]{6}", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*front border color " + boxClicked + "*/border-color:" + border_colorin[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.front').css('color', '#ffffff');
+                            }
+                        });//end border_color function
+
+                        //for border size--on textbox change
+                        $('#border_size' + phone_number_form_index).change(function() {
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var border_sizein = [] //array to hold numbers
+                            border_sizein[boxClicked] = $(this).val(); // grab border size value
+
+                            if ($("#border_size" + boxClicked).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .front').css('border-width', border_sizein[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*front border " + boxClicked + "\\*\\/border-width:\\d\+", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*front border " + boxClicked + "*/border-width:" + border_sizein[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.front').css('color', '#ffffff');
+                            }
+                        });
+
+                        //on checkbox click--border color and border size
+                        $("input[id^='check']").on('change', function() {
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+
+                            var isChecked = $(this).prop('checked');
+                            if (isChecked === true) {
+                                $("#border_size" + boxClicked).val("0");
+                            }
+                            else{
+                                    $("#border_size" + boxClicked).val("3");
+                                }
+
+                            $(this).closest('div').find('.showHide').toggle(!this.checked);
+
+                            //used for number spinners disable
+                            $('.showHide .ui-spinner a.ui-spinner-button').css('display', 'none');
+
+                            //for border color
+                            var border_colorin = [] //array to hold numbers
+                            border_colorin[boxClicked] = $("#border_color" + boxClicked).val(); // grab border color value
+                            if ($("#border_color" + boxClicked).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .front').css('border-color', border_colorin[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*front border color " + boxClicked + "\\*\\/border-color:#[0-9A-F]{6}", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*front border color " + boxClicked + "*/border-color:" + border_colorin[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.front').css('color', '#ffffff');
+                            }
+
+                            //for border size
+                            var border_sizein = [] //array to hold numbers
+                            border_sizein[boxClicked] = $("#border_size" + boxClicked).val(); // grab border size value
+                            if ($("#border_size" + boxClicked).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .front').css('border-width', border_sizein[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*front border " + boxClicked + "\\*\\/border-width:\\d\+", 'i');
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*front border " + boxClicked + "*/border-width:" + border_sizein[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.front').css('color', '#ffffff');
+                            }
+                            
+                            
+                        });
+                        
+                        /////////////////////////////////////////Back Border///////////////////////////
+                            //for Border Color--on input change
+                        $('#border_colorB' + phone_number_form_index).change(function() {
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var border_colorin = [] //array to hold numbers
+                            border_colorin[boxClicked] = $(this).val(); // grab input value
+                            
+                            if ($(this).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .back').css('border-color', border_colorin[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*back border color " + boxClicked + "\\*\\/border-color:#[0-9A-F]{6}", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*back border color " + boxClicked + "*/border-color:" + border_colorin[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.back').css('color', '#ffffff');
+                            }
+                        });//end border_color function
+
+
+                        //for border size--on textbox change
+                        $('#border_sizeB' + phone_number_form_index).change(function() {
+                            var boxClicked = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                            var border_sizein = [] //array to hold numbers
+                            border_sizein[boxClicked] = $(this).val(); // grab border size value
+                            
+                            if ($("#border_sizeB" + boxClicked).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClicked + ') .back').css('border-width', border_sizein[boxClicked]);
+
+                                //update html_display
+                                remove_css();
+                                
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*back border " + boxClicked + "\\*\\/border-width:\\d\+", 'i');
+
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*back border " + boxClicked + "*/border-width:" + border_sizein[boxClicked]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.back').css('color', '#ffffff');
+                            }
+                        });
+
+                        //on checkbox click--border color and border size
+                       $("input[id^='tick']").on('change', function() {
+                            var boxClickedB = $(this).attr("id").match(/\d+$/);//one or more digits that are at end
+                             
+                            var isCheckedB = $(this).prop('checked');
+                            
+                            if (isCheckedB === true) {
+                                $("#border_sizeB" + boxClickedB).val("0");
+                            }
+                            else if (isCheckedB === false) {
+                                $("#border_sizeB" + boxClickedB).val("3");
+                            }
+                            $(this).closest('div').find('.showHide').toggle(!this.checked);
+
+                            //used for number spinners disable
+                            $('.showHide .ui-spinner a.ui-spinner-button').css('display', 'none');
+
+                            //for border color
+                            var border_colorin = [] //array to hold numbers
+                            border_colorin[boxClickedB] = $("#border_colorB" + boxClickedB).val(); // grab border color value
+                            if ($("#border_colorB" + boxClickedB).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClickedB + ') .back').css('border-color', border_colorin[boxClickedB]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*back border color " + boxClickedB + "\\*\\/border-color:#[0-9A-F]{6}", 'i');
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*back border color " + boxClickedB + "*/border-color:" + border_colorin[boxClickedB]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.back').css('color', '#ffffff');
+                            }
+
+                            //for border size
+                            var border_sizein = [] //array to hold numbers
+                            border_sizein[boxClickedB] = $("#border_sizeB" + boxClickedB).val(); // grab border size value
+                            
+                            if ($("#border_sizeB" + boxClickedB).val().length > 0)
+                            {
+                                // replace css value on live preview
+                                $('.letter:nth-child(' + boxClickedB + ') .back').css('border-width', border_sizein[boxClickedB]);
+
+                                //update html_display
+                                remove_css();
+
+                                //replace in paragraph
+                                var match = new RegExp("\\/\\*back border " + boxClickedB + "\\*\\/border-width:\\d\+", 'i');
+                                $("textarea#show_css").filter(function() {
+                                    var $this = $(this);
+                                    $this.html(function() {
+                                        return $this.text().replace(match, "/*back border " + boxClickedB + "*/border-width:" + border_sizein[boxClickedB]);
+
+                                    });
+                                });
+                            } //endif
+                            else
+                            {
+                                //resorts back to default if no value entered
+                                $('.back').css('color', '#ffffff');
+                            }
+                            
+                            });
+
+                        myIndex++;
+                    }//end if (myIndex <= MaxInputs)
+                       
+                }); //end ("#add_phone_number").click(function()
+
+
+                //remove button clicked
+                $('#remove_phone_number').click(function() {
+                    $('div#phone_number_form' + myIndex).slideUp("normal", function() {
+                        $('div#phone_number_form' + myIndex).remove();
+                        phone_number_form_index--;
+
+                    });
+                    
+                    //remove in html area
+                    $("#box" + myIndex).closest("span").slideUp("normal", function() {
+                        $(this).remove(); 
+                        remove_css();
+                        });
+
+                    //remove back
+                    $('div#phone_number_formB' + myIndex).slideUp("normal", function() {
+                        $('div#phone_number_formB' + myIndex).remove();
+                        myIndex--;
+
+                        //hide the remove button
+                        if (myIndex === 0) {
+                            $("#remove_phone_number").css("display", "none");
+                            
+                            //Hide size settings
+                            $("div#size").hide();
+                            $("span#message").show();
+
+                            //Hide font settings
+                            $("div#fontSet").hide();
+                            $("span#messageFont").show();
+
+                            $("div#fontSetB").hide();
+                            $("span#messageB").show();
+                        }
+
+                    });//end back
+
+                });//end remove
+            });//end on ready
+    </script>
+    <script>
+        //Change color spectrum
+            $(document).ready(function() {
+                //for colorpicker
+                $("#ch_color").spectrum({
+                    preferredFormat: "hex",
+                    flat: true,
+                    showButtons: false,
+                    showInput: true,
+                    showPalette: true,
+                });
+            });//end function
+
+    </script>
+    <script>
+        //#dialog
+            $(function() {
+                $("#dialog").dialog({
+                    draggable: false,
+                    resizable: false,
+                    width: 220,
+                    autoOpen: false,
+                    position: [300, 240], //[x,y]
+                    show: {
+                        effect: "blind",
+                        duration: 500
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 500
+                    }
+                });
+                $(document).on('click', ".colorFul", function() {
+                    $("#dialog").dialog("open");
+                });
+            });
+    </script>
+    <script>
+        //#dialog_preview
+            $(function() {
+                $("#dialog_preview").dialog({
+                    draggable: false,
+                    width: 820,
+                    autoOpen: false,
+                    position: [300, 580],
+                    show: {
+                        effect: "blind",
+                        duration: 500
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 500
+                    }
+                }) //$("#dialog_preview").dialog
+                
+                .dialogExtend({
+                    "closable": false,
+                    "maximizable": true,
+                    "minimizable": true,
+                    "collapsable": true,
+                    "dblclick": "collapse",
+                    "titlebar": "transparent",
+                    "minimizeLocation": "right",
+                    "icons": {
+                        "maximize": "ui-icon-circle-plus",
+                        "minimize": "ui-icon-circle-minus",
+                        "collapse": "ui-icon-triangle-1-s",
+                        "restore": "ui-icon-bullet"
+                    },
+                    "minimize": function(evt, dlg) {
+                        isMin = 1;//minimized
+                    },
+                    "restore": function(evt, dlg) {
+                        //alert(evt.type);
+                        isMin = 0;//not minimized
+                    }
+                });
+
+                $(document).ready(function() {
+                    $("#dialog_preview").dialog("open");
+                    isMin = 0;//not minimized
+
+                    $(document).scroll(function() {
+                        if (isMin === 0) { //If not minimized
+                            $('#dialog_preview').dialog('option', 'position', [300, 580]);
+                        }
+
+                        $('#dialog').dialog('option', 'position', [300, 240]);
+                    });
+                });
+            });
+    </script>
+    <script>
+        
+            //selection on input click, add/hide boxes entry on button click, get code button click 
+            $(document).ready(function() {
+                //select input text on click
+                $('input').click(function() {
+                    // the select() function on the DOM element will do what you want
+                    this.select();
+                });
+                
+                
+                //get code button click
+                //clone and insert css and html from one div to another
+                $('#get_code').click(function() {
+                      //Empty the contents of #temp_html
+                        $("#temp_html").empty();
+
+                        //Store html in temp div
+                        $("#html_code").clone().appendTo("#temp_html");////something wrong with this code?
+                        
+                        //remove style attribute
+                        $("#temp_html div.animation-1 span.front").removeAttr('style');//Remove front attr
+                        $("#temp_html div.animation-1 span").removeAttr('style');
+
+                        var html_extracted = $("#temp_html #html_code").clone().html();
+
+                        $("#show_html").text(unescape(escape(html_extracted)));
+                        
+                    //scroll back to top
+                    jQuery('html, body').animate({scrollTop: 0}, 500);
+                    //return false;
+                });
+            });
+    </script>
+    <script>
+        //copy bg_color text to border color entry, select text on textbox click
+            $(document).ready(function() {
+            $(document).on('click', "#add_phone_number", function() {
+              
+                    //select input text on click
+                    $('input').click(function() {
+                        // the select() function on the DOM element will do what you want
+                        this.select();
+                    });
+               
+            });
+                
+         });
+    </script>
+    <script>
+            $(document).ready(function() {
+                //for font color front
+                $('#font_color').change(function() {   
+                    var font_color = $(this).val(); // grab color input value
+                    
+                    if ($(this).val().length > 0)
+                        {
+                            // replace css value on live preview
+                            $('.front').css('color', font_color);
+
+                            //replace in paragraph
+                            var match = /\/\*front font\*\/color:#[0-9A-F]{6}/i;
+
+                            $("textarea#show_css").filter(function() {
+                                var $this = $(this);
+                                $this.html(function() {
+                                    return $this.html().replace(match, "/*front font*/color:" + font_color);
+                                });
+                            });
+                        } //endif
+                        else
+                        {
+                            //resorts back to default if no value entered
+                            $('.back').css('color', '#ffffff');
+                        }
+                });//end font color front function
+                
+                 //for font color back
+                $('#font_color1').change(function() {
+                    var font_color1 = $(this).val(); // grab color input value
+                    
+                    if ($(this).val().length > 0)
+                    {
+                        // replace css value on live preview
+                        $('.back').css('color', font_color1);
+
+                        //replace in paragraph
+                        var match = /\/\*back font\*\/color:#[0-9A-F]{6}/i;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*back font*/color:" + font_color1);
+                            });
+                        });
+                    } //endif
+                    else
+                    {
+                        //resorts back to default if no value entered
+                        $('.front').css('color', '#ffffff');
+                    }
+                });//end font color back function
+                
+                //Height of each box---clicking the padding-top spinner
+                //bind spinner click to input change---reqd.
+                $('.ui-spinner-button').click(function() { $(this).siblings('input').change(); });
+                $('#padding_top').spinner().change(function() {
+                    var padding_top = $(this).spinner("value"); // grab color input value
+                        // replace css value on live preview
+                        $('.letter').css('padding-top', padding_top+"rem");
+
+                        //replace in paragraph
+                        var match = /padding\-top\:\d+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "padding-top:" + padding_top);
+                            });
+                        });
+                    
+                });
+                
+                //Width of each box---clicking the padding-top spinner
+                //bind spinner click to input change---reqd.
+                $('.ui-spinner-button').click(function() { $(this).siblings('input').change(); });
+                $('#padding_left').spinner().change(function() {
+                    var padding_left = $(this).spinner("value"); // grab color input value
+                        // replace css value on live preview
+                        $('.letter').css('padding-left', padding_left+"rem");
+
+                        //replace in paragraph
+                        var match = /padding\-left\:\d+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "padding-left:" + padding_left);
+                            });
+                        });
+                    
+                });
+
+                //front-font position
+                $('#front_pad').spinner().change(function() {
+                    var front_pos = $(this).spinner("value"); // grab color input value
+                        // replace css value on live preview
+                        $('.front').css('line-height', front_pos+"rem");
+                        
+                        //replace in paragraph
+                        var match = /\/\*front font\*\/line\-height\:\d+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*front font*/line-height:" + front_pos);
+                            });
+                        });  
+                });
+                
+                //back-font position
+                $('#back_pad').spinner().change(function() {
+                    var back_pos = $(this).spinner("value"); // grab color input value
+                        // replace css value on live preview
+                        $('.back').css('line-height', back_pos+"rem");
+
+                        //replace in paragraph
+                        var match = /\/\*back font\*\/line\-height\:\d+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*back font*/line-height:" + back_pos);
+                            });
+                        });  
+                });
+                
+                
+                //Front font size
+                $('#fontSizeFront').change(function(){
+                    var sel_size_front = $( "#fontSizeFront" ).val();
+
+                        // replace css value on live preview
+                        $('.front').css('font-size', sel_size_front+"em");
+
+                        //replace in paragraph
+                        var match = /\/\*front font\*\/font\-size\:\d+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*front font*/font-size:" + sel_size_front);
+                            });
+                        }); 
+
+                });
+                
+                //Back font size
+                $('#fontSizeFrontB').change(function(){
+                    var sel_size_back = $( "#fontSizeFrontB" ).val();
+
+                        // replace css value on live preview
+                        $('.back').css('font-size', sel_size_back+"em");
+
+                        //replace in paragraph
+                        var match = /\/\*back font\*\/font\-size\:\d+/;
+
+                        $("textarea#show_css").filter(function() {
+                            var $this = $(this);
+                            $this.html(function() {
+                                return $this.html().replace(match, "/*back font*/font-size:" + sel_size_back);
+                            });
+                        }); 
+
+                });
+
+            });
+    </script>
+    
+    <!-- Tab image animation-->
+    <script>
+       $(document).ready(function(){
+        $("#imgTab1").hover(
+            function()
+            {
+                $(this).attr("src", "img/animation1.gif");
+            },
+            function()
+            {
+                $(this).attr("src", "img/static1.jpg");
+            }                         
+        );                  
+        });
+    </script>
+</head>
+
+<!-- Start Body-->
+<body>
+    <div id="layout">
+        <!-- Wrappers for website modified using css file -->
+        <!-- Header -->
+        <div id="header-wrapper"><img src="img/header.jpg"></div>
+        
+        <!-- tabs -->
+        <div id="tabs">
+            <ul>
+                <li style="background-color:black;">
+                    <h4>Choose Animation Style</h4>
+                </li>
+
+                <li>
+                    <a href="#tabs-1"><img border="0" id="imgTab1" src=
+                    "img/static1.jpg" style="vertical-align: middle"></a>
+                </li>
+
+                <li>
+                    <a href="#tabs-2"></a>Style # 2
+                </li>
+
+                <li>
+                    <a href="#tabs-3"></a>Style # 3
+                </li>
+            </ul>
+
+            <div id="tabs-1">
+                <!-- Left Column -->
+
+                <div id="column-left">
+                    <div class="accordion">
+                        <h3 id="first">Size 
+                            
+                            <script>
+                                $(document).ready(function() {
+                                    //display information
+                                    $("#first").click(function(event) {
+                                        $(this).slideUp(); 
+                                        event.preventDefault();
+                                        $("div#size").hide();
+                                        $("span#message").show();
+                                    });
+                                });
+                            </script>
+                        </h3>
+
+                        <div>
+                            <span id="message">Click on <b>Front Words</b>
+                            button, then <b>Add Box</b> button to enable
+                            controls in this area</span>
+
+                            <div id="size">
+                                For each box:<br>
+                                <br>
+                                Height: <input class="spinner" id="padding_top"
+                                type="number" value="10"> rem<br>
+                                <br>
+                                Width: <input class="spinner" id="padding_left"
+                                type="number" value="10"> rem<br>
+                                <br>
+                                <hr>
+                                Font Positions:<br>
+                                <br>
+                                Front: <input class="spinner" id="front_pad"
+                                type="number" value="10"> rem<br>
+                                <br>
+                                Back: <input class="spinner" id="back_pad"
+                                type="number" value="10"> rem<br>
+                            </div><!--End Size-->
+                        </div>
+                    </div><!-- copy text from color chooser to placeholder -->
+                    <label class="hidden" id="temp">This stores color values to
+                    be pasted to clipboard</label> 
+                    
+                    <!-- Pop-up dialog for color chooser-->
+                    <div id="dialog" title="Choose Color">
+                        <input id="ch_color" name="ch_color" type="text">
+                        <button id="copy-color">Copy to Clipboard</button>
+                    </div>
+                    
+                    <!-- Pop-up dialog for preview -->
+                    <div id="dialog_preview" title="Preview">
+                        <div id='preview'>
+                            <div id="css_code">
+                                <!--CSS Code-->
+                                <style type="text/css">
+                                    .hidden-txt {
+                                    display: none !important;
+                                    }
+
+                                    .not-hidden{
+                                    display:inline-block;
+                                    }
+                                    .animation-1 .letter {
+                                    text-align: center;
+                                    //display: inline-block;
+                                    padding-top:10rem;/*height of each boxes is determined by this. Range=1 to 40*/
+                                    padding-right: 0px;
+                                    padding-bottom: 0px;
+                                    padding-left:10rem;/*width of each boxes is determined by this. Range=1 to 40*/
+                                    position: relative;
+                                    }
+
+                                    .animation-1 .front {
+                                    color:#FFFFFF;
+                                    font-family: Allan, Allan;
+                                    font-size:8em;/*changes front font size*/
+                                    line-height:10rem;/*changes front-font position from top*/
+                                    }
+
+                                    .animation-1 .front, .animation-1 .back {
+                                    display: inline-block;
+                                    position: absolute;
+                                    bottom: 0px;
+                                    right: 0px;
+                                    left: 0px;
+                                    top: 0px;
+                                    transition: -webkit-transform 800ms ease 0s;
+                                    }
+
+                                    .animation-1 .letter:nth-child(1) .front {
+                                    background:#FF4136 none repeat scroll 0px 0px;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(2) .front {
+                                    background:#FF851B none repeat scroll 0px 0px ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(3) .front {
+                                    background:#2ECC40 none repeat scroll 0px 0px ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(4) .front {
+                                    background:#0074D9 none repeat scroll 0px 0px ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(5) .front {
+                                    background:#B10DC9 none repeat scroll 0px 0px ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(6) .front {
+                                    background:#F2F211 none repeat scroll 0px 0px ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .back {
+                                    font-family:Allan,Allan;
+                                    font-size: 2em;
+                                    color:#000000;
+                                    line-height: 10rem; /*changes back-font position from top*/
+                                    }
+
+                                    .animation-1 .letter:nth-child(1) .back {
+                                    background:#FF4136 none repeat scroll 0% 0% ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color: #000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(2) .back {
+                                    background:#FF4136 none repeat scroll 0% 0% ;
+                                    border-color:#FF851B;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    background:#B10DC9 none repeat scroll 0% 0% ;
+
+                                    }
+
+                                    .animation-1 .letter:nth-child(3) .back {
+                                    background:#6b3a3a none repeat scroll 0% 0% ;
+                                    border-color:#000000;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    }
+
+                                    .animation-1 .letter:nth-child(4) .back {
+                                    background:#0074D9 none repeat scroll 0% 0% ;
+                                    border-color:#000000;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    }
+
+                                    .animation-1 .letter:nth-child(5) .back {
+                                    background:#F2F211 none repeat scroll 0% 0% ;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    border-color:#000000;
+                                    }
+
+                                    .animation-1 .letter:nth-child(6) .back {
+                                    background:#F2F211 none repeat scroll 0% 0% ;
+                                    border-color:#000000;
+                                    border-width:0px;
+                                    border-style:solid;
+                                    }
+
+                                    .animation-1:hover .back {
+
+                                    }
+
+                                    .animation-1:hover .front {
+
+                                    }
+
+                                    .animation-1 .letter:nth-child(1) span {
+                                    transition-delay: 200ms;
+                                    }
+
+                                    .animation-1 .letter:nth-child(2) span {
+                                    transition-delay: 400ms;
+                                    }
+
+                                    .animation-1 .letter:nth-child(3) span {
+                                    transition-delay: 600ms;
+                                    }
+
+                                    .animation-1 .letter:nth-child(4) span {
+                                    transition-delay: 800ms;
+                                    }
+
+                                    .animation-1 .letter:nth-child(5) span {
+                                    transition-delay: 1000ms;
+                                    }
+
+                                    .animation-1 .letter:nth-child(6) span {
+                                    transition-delay: 1200ms;
+                                    }
+
+                                    @-moz-document url-prefix("") {
+                                    .animation-1 .letter { perspective: 20rem; }
+                                    .animation-1 .front, .animation-1 .back { backface-visibility: hidden; transition: -moz-transform 800ms ease 0s; }
+                                    .animation-1 .back { transform: translateZ(0px) rotateY(-180deg); }
+                                    .animation-1:hover .back { transform: translateZ(0px) rotateY(0deg); }
+                                    .animation-1:hover .front { transform: translateZ(0px) rotateY(180deg); }
+                                    }
+
+
+                                    .animation-1 .letter { -webkit-perspective: 20rem; }
+                                    .animation-1 .front, .animation-1 .back { -webkit-backface-visibility: hidden; -webkit-transition: transform 800ms ease 0s; }
+                                    .animation-1 .back { -webkit-transform:rotateY(-180deg); }
+                                    .animation-1:hover .back { -webkit-transform:rotateY(0deg); }
+                                    .animation-1:hover .front {-webkit-transform: rotateY(180deg); }  
+                                </style>
+                            </div>
+
+                            <div id="html_code"> 
+                                <!--HTML Code-->
+                                <div class='animation-1'>
+                                    <span class='letter hidden-txt' id="box">
+                                        <span class='back'>Android</span>
+                                        <span class='front'>T</span>    
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!---This looks silly, but # of boxes won't increase if this div is outside the dialog=-->
+                        <!---temp div=-->
+                        <!--Stores cloned html to remove its style-->
+
+                        <div class='hidden-txt' id="temp_html"></div>
+                    </div><!---end dialog preview=-->
+                    
+                    <!---Copy to clipboard=-->
+                    <script type="text/javascript">
+                        // Specify where the Flash movie can be found if not in root folder for web site
+                            var clipCopyColor = $(function() {
+                                ZeroClipboard.config({moviePath: 'js/ZeroClipboard.swf'});
+                                var clientColor = new ZeroClipboard($("#copy-color"));
+                                clientColor.on('ready', function(event1) {
+                                    clientColor.on('copy', function(event1) {
+                                        //store color value on label to be copied to clipboard
+                                        var copiedColor = $('#temp').text($("#ch_color").spectrum("get"));
+                                        //target is defined in data-clipboard-target while creating button
+                                        event1.clipboardData.setData('text/plain', copiedColor.text()); //grab text from the label
+                                    });
+                                    // callback triggered on successful copying
+                                    clientColor.on('aftercopy', function(event1) {
+                                    });
+                                });
+                                // In case of error - such as Flash not being available
+                                clientColor.on('wrongflash noflash', function() {
+                                    ZeroClipboard.destroy();
+                                });
+                            });
+                    </script>
+
+                    <div class="accordion">
+                        <h3 id="second">Front Words 
+                            <script>
+                                //display instructions
+                                $(document).ready(function() {
+                                    $("#second").click(function(event) {                          
+                                        event.preventDefault();
+                                        $("div#fontSet").hide();
+                                        $("span#messageFont").show();
+                                    });
+                                });
+                            </script>
+                        </h3>
+
+                        <div id="wordSettings">
+                            <!--Word settings-->
+                             <span id="messageFont">Click <b>Add Box</b> button
+                            to show <b>Font Settings</b> in this area</span>
+
+                            <div id="fontSet">
+                                <!--font settings-->
+                                 <span><!--For font selector-->
+                                 <a class="selector1" href="javascript:void(0)"
+                                id="selectH1">Allan</a> <select class=
+                                "selector2" id="fontSizeFront">
+                                    <option value="1">
+                                        1
+                                    </option>
+
+                                    <option value="2">
+                                        2
+                                    </option>
+
+                                    <option value="3">
+                                        3
+                                    </option>
+
+                                    <option value="4">
+                                        4
+                                    </option>
+
+                                    <option value="5">
+                                        5
+                                    </option>
+
+                                    <option value="6">
+                                        6
+                                    </option>
+
+                                    <option value="7">
+                                        7
+                                    </option>
+
+                                    <option value="8">
+                                        8
+                                    </option>
+
+                                    <option value="9">
+                                        9
+                                    </option>
+
+                                    <option selected value="10">
+                                        10
+                                    </option>
+
+                                    <option value="11">
+                                        11
+                                    </option>
+
+                                    <option value="12">
+                                        12
+                                    </option>
+
+                                    <option value="13">
+                                        13
+                                    </option>
+
+                                    <option value="14">
+                                        14
+                                    </option>
+
+                                    <option value="15">
+                                        15
+                                    </option>
+
+                                    <option value="16">
+                                        16
+                                    </option>
+
+                                    <option value="17">
+                                        17
+                                    </option>
+
+                                    <option value="18">
+                                        18
+                                    </option>
+
+                                    <option value="19">
+                                        19
+                                    </option>
+
+                                    <option value="20">
+                                        20
+                                    </option>
+
+                                    <option value="21">
+                                        21
+                                    </option>
+                                </select></span><br>
+                                <br>
+                                Font Color : <input class="colorFul" id=
+                                "font_color" name="font_color" type="text"
+                                value="#000000"><br>
+                                <br>
+                                <hr>
+                            </div><!--End font settings-->
+
+                            <div>
+                                <!-- Each Word settings-->
+
+                                <div class="hidden" id="phone_number_form">
+                                    <br>
+                                    Word on box : <input class="word" id="word"
+                                    name="word" type="text" value=
+                                    "Website"><br>
+                                    Background color : <input class="colorFul"
+                                    id="bg_color" name="bg_color" type="text"
+                                    value="#d81919"><br>
+
+                                    <div>
+                                        <br>
+                                        <input id="check" type="checkbox">No
+                                        border<br>
+                                        <span class="showHide hidden"><br>
+                                        Border color : <input class="colorFul"
+                                        id="border_color" name="border_color"
+                                        type="text" value="#000000"><br>
+                                        <!-- Number Spinner HTML-->
+                                         Border Size: <input id="border_size"
+                                        max="40" min="0" type="number" value=
+                                        "0"> rem<br>
+                                        <br></span>
+                                        <hr class="slim">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button id="remove_phone_number">Remove
+                                    Last</button><br>
+                                    <br>
+                                    <hr>
+                                    <script>
+                                        $("button").button();
+                                    </script><br>
+                                    <!--<input type="button" value="Add phone number" id="add_phone_number">-->
+                                     <button id="add_phone_number">Add Box</button> 
+                                     
+                                     <script>
+                                        $("button").button();
+                                    </script>
+                                </div>
+                            </div><!--End each Word settings-->
+                        </div><!--End Word settings-->
+                    </div><!--End Front Word Accordion-->
+
+                    <div class="accordion">
+                        <h3 id="third">Back words 
+                            <script>
+                                $(document).ready(function() {
+                                    $("#first").click(function(event) {
+                                        event.preventDefault();
+                                        $("div#fontSetB").hide();
+                                        $("span#messageB").show();
+                                    });
+                                });
+                            </script>
+                        </h3>
+
+                        <div id="wordSettingsB">
+                            <!--Word settings-->
+                             <span id="messageB">Click <b>Front words</b>, then
+                            click <b>Add Box</b> button to show <b>Font
+                            Controls</b> in this area</span>
+
+                            <div id="fontSetB">
+                                <!--font settings-->
+                                 <span><!--For font selector-->
+                                 <a class="selector1" href="javascript:void(0)"
+                                id="selectH1B">Allan</a> <select class=
+                                "selector2" id="fontSizeFrontB">
+                                    <option value="1">
+                                        1
+                                    </option>
+
+                                    <option selected value="2">
+                                        2
+                                    </option>
+
+                                    <option value="3">
+                                        3
+                                    </option>
+
+                                    <option value="4">
+                                        4
+                                    </option>
+
+                                    <option value="5">
+                                        5
+                                    </option>
+
+                                    <option value="6">
+                                        6
+                                    </option>
+
+                                    <option value="7">
+                                        7
+                                    </option>
+
+                                    <option value="8">
+                                        8
+                                    </option>
+
+                                    <option value="9">
+                                        9
+                                    </option>
+
+                                    <option value="10">
+                                        10
+                                    </option>
+
+                                    <option value="11">
+                                        11
+                                    </option>
+
+                                    <option value="12">
+                                        12
+                                    </option>
+
+                                    <option value="13">
+                                        13
+                                    </option>
+
+                                    <option value="14">
+                                        14
+                                    </option>
+
+                                    <option value="15">
+                                        15
+                                    </option>
+
+                                    <option value="16">
+                                        16
+                                    </option>
+
+                                    <option value="17">
+                                        17
+                                    </option>
+
+                                    <option value="18">
+                                        18
+                                    </option>
+
+                                    <option value="19">
+                                        19
+                                    </option>
+
+                                    <option value="20">
+                                        20
+                                    </option>
+
+                                    <option value="21">
+                                        21
+                                    </option>
+                                </select></span><br>
+                                <br>
+                                Font Color : <input class="colorFul" id=
+                                "font_color1" name="font_color" type="text"
+                                value="#000000"><br>
+                                <br>
+                                <hr>
+                            </div><!--End font settings-->
+
+                            <div>
+                                <!-- Each Word settings-->
+
+                                <div class="hidden" id="phone_number_formB">
+                                    <br>
+                                    Word on box : <input class="word" id=
+                                    "wordB" name="word" type="text" value=
+                                    "Website"><br>
+                                    Background color : <input class="colorFul"
+                                    id="bg_colorB" name="bg_color" type="text"
+                                    value="#d81919"><br>
+
+                                    <div>
+                                        <br>
+                                        <input id="tickB" type="checkbox">No
+                                        border<br>
+                                        <span class="showHide hidden"><br>
+                                        Border color : <input class="colorFul"
+                                        id="border_colorB" name="border_color"
+                                        type="text" value="#000000"><br>
+                                        <!-- Number Spinner HTML-->
+                                         Border Size: <input id="border_sizeB"
+                                        max="40" min="0" type="number" value=
+                                        "0"> rem<br>
+                                        <br></span>
+                                    </div><button id="remove_phone_numberB"
+                                    style="display:none;">Remove</button><br>
+                                    <br>
+                                    <hr>
+                                    <script>
+                                        $("button").button();
+                                    </script>
+                                </div>
+
+                                <p><br>
+                                <!--<input type="button" value="Add phone number" id="add_phone_number">-->
+                                 <button id="add_phone_numberB" style=
+                                "display:none;">Add Box</button> 
+                                <script>
+                                    $("button").button();
+                                </script><br>
+                                <button id="get_code">Get Code</button>
+                                <script>
+                                    $("button").button();
+                                </script>
+                                </p>
+                            </div><!--End each Word settings-->
+                        </div><!--End Word settings-->
+                    </div><!--End Back word Accordion-->
+                </div><!--End Column Left-->
+                
+                <!-- CSS Code display -->
+                <!-- Show below code in the textarea, initially. Text in this area will be changed dynamically -->
+                <div class="codearea" id="css-code-area">
+                    <textarea cols="57" id="show_css" rows="24">
+/***CSS generated by www.animationcss.com***/
+.hidden-txt {
+display: none !important;
+}
+
+.not-hidden{
+display:inline-block;
+}
+
+.animation-1 .letter {
+text-align: center;
+display: inline-block;
+padding-top:10rem;/*height of each boxes is determined by this. Range=1 to 40*/
+padding-right: 0px;
+padding-bottom: 0px;
+padding-left:10rem;/*width of each boxes is determined by this. Range=1 to 40*/
+position: relative;
+}
+
+.animation-1 .front {
+/*front font*/color:#FFFFFF;
+/*front font*/font-family:Allan,Allan;
+/*front font*/font-size:8em;/*changes front font size*/
+/*front font*/line-height:10rem;/*changes front-font position from top*/
+}
+
+.animation-1 .front, .animation-1 .back {
+display: inline-block;
+position: absolute;
+bottom: 0px;
+right: 0px;
+left: 0px;
+top: 0px;
+transition: -webkit-transform 800ms ease 0s;
+}
+
+.animation-1 .letter:nth-child(1) .front {background:#FF4136 none repeat scroll 0px 0px;
+/*front border 1*/border-width:0px;
+border-style:solid; 
+/*front border color 1*/border-color:#FF4136;
+}
+
+.animation-1 .letter:nth-child(2) .front {background:#FF851B none repeat scroll 0px 0px ;
+/*front border 2*/border-width:0px;
+border-style:solid; 
+/*front border color 2*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(3) .front {background:#2ECC40 none repeat scroll 0px 0px ;
+/*front border 3*/border-width:0px;
+border-style:solid; 
+/*front border color 3*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(4) .front {background:#0074D9 none repeat scroll 0px 0px ;
+/*front border 4*/border-width:0px;
+border-style:solid; 
+/*front border color 4*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(5) .front {background:#B10DC9 none repeat scroll 0px 0px ;
+/*front border 5*/border-width:0px;
+border-style:solid; 
+/*front border color 5*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(6) .front {background:#F2F211 none repeat scroll 0px 0px ;
+/*front border 6*/border-width:0px;
+border-style:solid; 
+/*front border color 6*/border-color:#FF851B;
+}
+
+.animation-1 .back {
+/*back font*/color:#000000;
+/*back font*/font-family:Allan,Allan;
+/*back font*/font-size:2em;
+/*back font*/line-height:10rem; /*changes back-font position from top*/
+}
+
+.animation-1 .letter:nth-child(1) .back {background:#FF4136 none repeat scroll 0% 0% ;
+/*back border 1*/border-width:0px;
+border-style:solid; 
+/*back border color 1*/border-color:#000000;
+}
+
+.animation-1 .letter:nth-child(2) .back {background:#FF851B none repeat scroll 0% 0% ;
+/*back border 2*/border-width:0px;
+border-style:solid; 
+/*back border color 2*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(3) .back {background:#2ECC40 none repeat scroll 0% 0% ;
+/*back border 3*/border-width:0px;
+border-style:solid; 
+/*back border color 3*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(4) .back {background:#0074D9 none repeat scroll 0% 0% ;
+/*back border 4*/border-width:0px;
+border-style:solid; 
+/*back border color 4*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(5) .back {background:#B10DC9 none repeat scroll 0px 0px ;    
+/*back border 5*/border-width:0px;
+border-style:solid; 
+/*back border color 5*/border-color:#FF851B;
+}
+
+.animation-1 .letter:nth-child(6) .back {background:#F2F211 none repeat scroll 0% 0% ;
+/*back border 6*/border-width:0px;
+border-style:solid; 
+/*back border color 6*/border-color:#FF851B;
+}
+
+.animation-1:hover .back {
+
+}
+
+.animation-1:hover .front {
+
+}
+
+.animation-1 .letter:nth-child(1) span {
+transition-delay: 200ms;
+}
+
+.animation-1 .letter:nth-child(2) span {
+transition-delay: 400ms;
+}
+
+.animation-1 .letter:nth-child(3) span {
+transition-delay: 600ms;
+}
+
+.animation-1 .letter:nth-child(4) span {
+transition-delay: 800ms;
+}
+
+.animation-1 .letter:nth-child(5) span {
+transition-delay: 1000ms;
+}
+
+.animation-1 .letter:nth-child(6) span {
+transition-delay: 1200ms;
+}
+
+@-moz-document url-prefix("") {
+.animation-1 .letter { perspective: 20rem; }
+.animation-1 .front, .animation-1 .back { backface-visibility: hidden; transition: -moz-transform 800ms ease 0s; }
+.animation-1 .back { transform: translateZ(0px) rotateY(-180deg); }
+.animation-1:hover .back { transform: translateZ(0px) rotateY(0deg); }
+.animation-1:hover .front { transform: translateZ(0px) rotateY(180deg); }
+}
+
+.animation-1 .letter { -webkit-perspective: 20rem; }
+.animation-1 .front, .animation-1 .back { -webkit-backface-visibility: hidden; -webkit-transition: transform 800ms ease 0s; }
+.animation-1 .back { -webkit-transform:rotateY(-180deg); }
+.animation-1:hover .back { -webkit-transform:rotateY(0deg); }
+.animation-1:hover .front {-webkit-transform: rotateY(180deg); }
+</textarea><!---End show css textarea -->
+
+                     <!---Copy to clipboard button=--> 
+                     <button class="centered"
+                    data-clipboard-target="show_css" id="copy_css">Copy CSS
+                     </button> 
+                     <script>
+                        $("button").button();
+                    </script>
+                </div><!---End CSS Code area=-->
+                
+                <!-- HTML Code display -->
+                <div class="codearea-med" id="html-code-area">
+                    <!-- Show below code in the textarea, initially. Text in this area will be changed dynamically -->
+                    <textarea cols="58" id="show_html" rows="14">
+HTML will be displayed here
+                    </textarea> 
+                    <button class="centered" data-clipboard-target="show_html"
+                    id="copy_html">Copy HTML
+                    </button> 
+                    <script>
+                        $("button").button();
+                    </script><br>
+                    <br>
+
+                    <div class="codearea-sm" id="header-code-area">
+                        <!-- Show below code in the textarea, initially. Text in this area will be changed dynamically -->
+                        <textarea cols="58" id="show_header" rows="7">
+<!-- Paste this code to the header of your website -->
+<!--front--><link href='http://fonts.googleapis.com/css?family=Allan' rel='stylesheet' type='text/css'>
+<!--back--><link href='http://fonts.googleapis.com/css?family=Calligraffitti'rel='stylesheet' type='text/css'>
+                        </textarea>
+                        <button class=
+                        "centered" data-clipboard-target="show_header" id=
+                        "copy_header">Copy header
+                        </button> 
+                        <script>
+                            $("button").button();
+                        </script>
+                    </div>
+                    
+                    <!---Copy to clipboard=-->
+                    <script type="text/javascript">
+                        // Specify where the Flash movie can be found if not in root folder for web site
+                            //var clipCopyColor = $(document).ready(function() {
+                            function clipboardCopier(btn_id) {
+                                ZeroClipboard.config({moviePath: 'js/ZeroClipboard.swf'});
+                                var clientCss = new ZeroClipboard(document.getElementById(btn_id));
+                                clientCss.on('ready', function(event1) {
+                                    clientCss.on('copy', function(event1) {
+                                        //target is defined in data-clipboard-target while creating button  
+                                        event1.clipboardData.setData('text/plain', event1.target.value);
+                                    });
+                                    // callback triggered on successful copying
+                                    clientCss.on('aftercopy', function(event1) {                                   
+                                    });
+                                });
+                                // In case of error - such as Flash not being available
+                                clientCss.on('wrongflash noflash', function() {
+                                    ZeroClipboard.destroy();
+                                });
+                            };
+                            
+                            clipboardCopier("copy_css");
+                            clipboardCopier("copy_html");
+                            clipboardCopier("copy_header");
+                            
+                    </script>
+                </div>
+            </div>
+            
+            <!---Second Page tab-->
+            <div id="tabs-2">
+                <p>Coming Soon...</p>
+            </div>
+            
+            <!---Third Page tab-->
+            <div id="tabs-3">
+                <p>Coming Soon....</p>
+            </div>
+        </div> <!---End div id = "tabs"-->
+        
+        <!-- Footer -->
+        <div id="footer-wrapper">
+            Footer
+        </div>
+        
+    </div><!--End Layout-->
+</body>
+</html>

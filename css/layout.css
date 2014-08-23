@@ -1,0 +1,249 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 28, 2014, 7:30:05 PM
+    Author     : santosh
+*/
+
+#layout{ 
+    border: 0px solid blue;
+    height: auto;
+}
+#header-wrapper{
+    width: 80%;
+    //border: 2px solid green;
+   
+    border-width: 3px;
+    border-style: solid;
+    display: table;
+    margin: auto;
+    height: 100px;
+    
+}
+#footer-wrapper{
+    width: 53%;
+    display: table;
+    margin: auto;
+    background-color: black;
+    height: auto;
+    
+}
+#column-left{
+    float:left;
+    color: white;
+    margin: 0 0 0 -12px;
+    width: 21%;
+    height: 1068px;
+    //background-color: #0b0538;
+}
+#column-right{ 
+    float:right;
+    width: 25%;
+    height: 1068px;
+    //background-color: #0b0538;
+}
+
+#css-code-area{
+    padding: 0px;
+    margin:0 0 0 20px;
+    border: 0px solid purple;
+    float:left;
+    width: 28%;
+    
+    height: 420px;
+}
+
+#html-code-area{
+    padding: 0px;
+    margin:0 0 0 25px;
+    border: 0px solid red;
+    float:left;
+    width: 27%;
+    height: 420px;
+}
+
+
+.codearea{
+    text-align: left;
+    border:0px solid gray;
+    width:100%;
+    height:580px;
+    //word-wrap: break-word;
+    //background-color: #0b0538;
+}
+
+.codearea-med{
+    text-align: left;
+    border:0px solid gray;
+    width:100%;
+    height:540px;
+    //word-wrap: break-word;
+    //background-color: #0b0538;
+}
+
+.codearea-sm{
+    text-align: left;
+    border:0px solid gray;
+    width:100%;
+    height:40px;
+    //word-wrap: break-word;
+    //background-color: #0b0538;
+}
+
+.centered{
+    margin-left: 35%;
+}
+#settings{
+    text-align: left;
+    margin-left: 900px;
+    font-size: 15px;
+    margin-left: 6px;
+    margin-top: 6px;
+}
+
+.box-settings{
+    width:5px;
+}
+
+textarea{
+    
+}
+
+input[type="number"] {
+   width:30px;
+   color:white;
+}
+
+select {
+   width:60px;
+   color:white;
+   background: black;
+}
+
+
+.colorFul, .word {
+   font-size: 13px !important;
+   color:white;
+   width:60px;
+   background-color:black;
+   border:none;
+   border-bottom:1px dotted gray;
+}
+
+.hidden {
+    display: none;
+}
+
+/*.not-hidden{
+    display:inline-block;
+}*/
+
+.hiddenimp {
+    display: none !important;
+}
+/* Bellow is completely unnecessary */
+* {
+	font-family: Arial;
+	font-size: 13px;
+}
+
+/* To remove HTML 5 spinner */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+//for Firefox
+input[type='number'] { //not working
+    -moz-appearance:textfield;
+}
+
+input#padding_top, input#padding_left, input#front_pad, input#back_pad {
+    -moz-appearance:textfield;
+}
+
+hr {
+    float:left;
+    margin-left: -22px;
+    width: 118%;
+    height: 5px;
+    color:gray;
+    border: 0;
+    box-shadow: inset 0 8px 8px -8px rgba(192,192,192,0.8);
+}
+
+hr.slim{
+    display:inline-block;
+    //float:left;
+    margin-left: -14px;
+    width: 115%;
+    height: 2px;
+    color:silver;
+    border: 0;
+    box-shadow: inset 0 3px 3px -3px rgba(192,192,192,0.8);
+}
+
+#dialog{ 
+    width:10px;
+    background-color:white;
+}
+
+#dialog_preview{ 
+    //width:10px;
+    background-color:white;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+/*.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+   float: right;
+   margin-top:-193px;
+   margin-right:-15px;
+}*/
+
+body{
+    background:
+radial-gradient(black 15%, transparent 16%) 0 0,
+radial-gradient(black 15%, transparent 16%) 8px 8px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+background-color:#282828;
+background-size:16px 16px;
+}
+
+textArea{
+    background-color:darkgray;
+background-image: linear-gradient(gainsboro 1px, transparent 2px),
+linear-gradient(90deg, gainsboro 1px, transparent 2px),
+linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+}
+
+#dialog_preview{
+    background-color:#269;
+background-image: linear-gradient(white 2px, transparent 2px),
+linear-gradient(90deg, white 2px, transparent 2px),
+linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+    
+}
+
+.error{
+    border-color: red;
+     border-width: 1px;
+     border-style: solid;
+}
+             
+
+
